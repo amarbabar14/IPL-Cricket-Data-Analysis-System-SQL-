@@ -1,2 +1,0 @@
-# IPL-Cricket-Data-Analysis-System-SQL-
-Analyzed IPL datasets using SQL by cleaning data, performing joins, and generating insights on teams, players, and match performance.
