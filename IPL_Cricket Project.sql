@@ -212,38 +212,6 @@ FROM Players p
 JOIN Teams t ON p.TeamID = t.TeamID
 ORDER BY t.TeamName, p.PlayerName;
 
--- Q13. Match with smallest margin of victory. 
-SELECT t1.TeamName AS Team1,
-       s1.Runs AS Team1Runs,
-       t2.TeamName AS Team2,
-       s2.Runs AS Team2Runs,
-       ABS(s1.Runs - s2.Runs) AS Margin,
-       tw.TeamName AS Winner
-FROM Matches m
-JOIN Scorecard s1 ON m.MatchID = s1.MatchID 
-                  AND m.Team1ID = s1.TeamID
-JOIN Scorecard s2 ON m.MatchID = s2.MatchID 
-                  AND m.Team2ID = s2.TeamID
-JOIN Teams t1 ON m.Team1ID = t1.TeamID
-JOIN Teams t2 ON m.Team2ID = t2.TeamID
-JOIN Teams tw ON m.WinnerID = tw.TeamID
-ORDER BY Margin ASC
-LIMIT 1;
 
--- Q14. Matches where both teams scored above 170.
-SELECT t.Teams,m.MatchID
-FROM Teams 
-join Matches m ON m.Team1ID = t1.TeamID
-JOIN Teams t2 ON m.Team2ID = t2.TeamID
-JOIN Scorecard s1 ON m.MatchID = s1.MatchID
-JOIN Scorecard s2 ON m.MatchID = s2.MatchID AND s1.TeamID <> s2.TeamID
-GROUP BY m.MatchID
-HAVING MIN(s1.Runs) > 170 AND MIN(s2.Runs) > 170;
- 
--- Q15. Show winner team name with its runs.
-SELECT m.MatchID, t.TeamName AS Winner, s.Runs
-FROM Matches m
-JOIN Teams t ON m.WinnerID = t.TeamID
-JOIN Scorecard s ON m.MatchID = s.MatchID AND m.WinnerID = s.TeamID;
 
 
